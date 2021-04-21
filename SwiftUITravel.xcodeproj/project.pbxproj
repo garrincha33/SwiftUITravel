@@ -52,6 +52,8 @@
 		1BCFE5C7262FECC20059FAE8 /* SwiftUITravel */ = {
 			isa = PBXGroup;
 			children = (
+				1BCFE5D926302E600059FAE8 /* View */,
+				1BCFE5D826302E590059FAE8 /* Model */,
 				1BCFE5C8262FECC20059FAE8 /* SwiftUITravelApp.swift */,
 				1BCFE5CA262FECC20059FAE8 /* ContentView.swift */,
 				1BCFE5CC262FECD50059FAE8 /* Assets.xcassets */,
@@ -67,6 +69,20 @@
 				1BCFE5CF262FECD50059FAE8 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1BCFE5D826302E590059FAE8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1BCFE5D926302E600059FAE8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
