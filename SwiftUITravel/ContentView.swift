@@ -12,7 +12,6 @@ struct ContentView: View {
         NavigationView {
             ScrollView {
                 DiscoverCategoriesView()
-                //step 1 create 3 new views (amend spacing for Vstack to 8 in DiscoverView)
                 PopularDestinationsView()
                 PopularRestarauntsView()
                 TrendingCreatorsView()
@@ -25,14 +24,11 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-//step 3 create a new struct to contain cateogires
 struct Category: Hashable {
     let name, imageName: String
 }
 
 struct DiscoverCategoriesView: View {
-    //step 4 create a local array for storing objects
     let categories: [Category] = [
         .init(name: "Art", imageName: "paintpalette.fill"),
         .init(name: "Sport", imageName: "sportscourt.fill"),
@@ -43,29 +39,36 @@ struct DiscoverCategoriesView: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .top, spacing: 12) {
-                //step 5 plug in your categories
                 ForEach(categories, id: \.self) { category in
                     VStack(spacing: 8) {
                         Image(systemName: category.imageName)
-                            //step 6 add forground color and change from inifinty to 25
                             .foregroundColor(Color.white)
                             .frame(width: 64, height: 64)
                             .background(Color.gray)
                             .cornerRadius(34)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
-                        Text(category.name)//step 6 udpate internals
+                        Text(category.name)
                             .font(.system(size: 14))
                             .font(.system(size: 12, weight: .semibold))
                             .multilineTextAlignment(.center)
-                    }.frame(width: 64)//step 7 add a frame for equal spacing
+                    }.frame(width: 64)
                 }
             }
             .padding(.horizontal)
         }
     }
 }
-//step 2 copy destinations view above and amend accordingly
+//step 2 lets make our data more dynamic
+struct Destination: Hashable {
+    let name, country, imageName: String
+}
 struct PopularDestinationsView: View {
+    let destinations: [Destination] = [
+        .init(name: "Paris", country: "France", imageName: "eiffel_tower"),
+        .init(name: "Tokyo", country: "Japan", imageName: "japan"),
+        .init(name: "New York", country: "US", imageName: "new_york")
+    ]
+    
     var body: some View {
         VStack {
             HStack {
@@ -80,10 +83,30 @@ struct PopularDestinationsView: View {
         
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8.0) {
-                ForEach(0..<5, id: \.self) { num in
-                        Spacer()
-                            .frame(width: 125, height: 150)
-                            .background(Color.gray)
+                ForEach(destinations, id: \.self) { destination in
+                    //step 3 add vstack and amend hard coded desintations
+                    VStack(alignment: .leading, spacing: 0) {
+                        //step 4 render an image from assets
+                        Image(destination.imageName)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 125, height: 125)
+                            .cornerRadius(5) //has to be above padding otherwise wont show
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 6)
+
+                        Text(destination.name)
+                            .font(.system(size: 12, weight: .semibold))
+                            .padding(.horizontal, 12)
+                        Text(destination.country)
+                            .font(.system(size: 12, weight: .semibold))
+                            .padding(.horizontal, 12)
+                            .padding(.bottom, 8)
+                            .foregroundColor(.gray)
+                    }
+                            //.frame(width: 125)
+                            //step 1 adjust color
+                            .background(Color(.init(white: 0.9, alpha: 1)))
                             .cornerRadius(5)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
                             .padding(.bottom)
