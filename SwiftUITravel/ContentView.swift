@@ -58,7 +58,6 @@ struct DiscoverCategoriesView: View {
         }
     }
 }
-//step 2 lets make our data more dynamic
 struct Destination: Hashable {
     let name, country, imageName: String
 }
@@ -84,14 +83,12 @@ struct PopularDestinationsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8.0) {
                 ForEach(destinations, id: \.self) { destination in
-                    //step 3 add vstack and amend hard coded desintations
                     VStack(alignment: .leading, spacing: 0) {
-                        //step 4 render an image from assets
                         Image(destination.imageName)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 125, height: 125)
-                            .cornerRadius(5) //has to be above padding otherwise wont show
+                            .cornerRadius(5)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 6)
 
@@ -104,8 +101,6 @@ struct PopularDestinationsView: View {
                             .padding(.bottom, 8)
                             .foregroundColor(.gray)
                     }
-                            //.frame(width: 125)
-                            //step 1 adjust color
                             .background(Color(.init(white: 0.9, alpha: 1)))
                             .cornerRadius(5)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
@@ -117,7 +112,19 @@ struct PopularDestinationsView: View {
     }
 }
 
+//step 1 create another hasable struct
+struct Restaurants: Hashable {
+    let name, imageName: String
+}
+
 struct PopularRestarauntsView: View {
+    //step 2
+    let restaraunts: [Restaurants] = [
+        .init(name: "Japan's Finest Tapas", imageName: "tapas"),
+        .init(name: "Bar & Grill", imageName: "bar_grill"),
+    
+    ]
+    
     var body: some View {
         VStack {
             HStack {
@@ -131,11 +138,42 @@ struct PopularRestarauntsView: View {
         .padding(.top)
 
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8.0) {
-                ForEach(0..<5, id: \.self) { num in
+            HStack(spacing: 0) {
+                ForEach(restaraunts, id: \.self) { restaraunt in
                         Spacer()
-                            .frame(width: 200, height: 64)
-                            .background(Color.gray)
+                    //step 3 add hstack inside existing hstack scroll view
+                    HStack(spacing: 8) {
+                        Image(restaraunt.imageName)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                                .clipped()
+                            .padding(.leading, 6)
+                            .padding(.vertical, 6)
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack {
+                                Text(restaraunt.name)
+                                    .font(.system(size: 11, weight: .semibold))
+                                Spacer()
+                                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                                    Image(systemName: "ellipsis")
+                                        .foregroundColor(.gray)
+                                })
+                            }
+                            HStack {
+                                Image(systemName: "star.fill")
+                                    .font(.system(size: 12, weight: .semibold))
+                                Text("4.7 - Sushi - $$")
+                                    .font(.system(size: 12, weight: .semibold))
+                            }
+
+                            Text("Tokyo, Japan")
+                                .font(.system(size: 12, weight: .semibold))
+                        }
+                        Spacer()
+                    }
+                            .frame(width: 240)
+                            .background(Color(.init(white: 0.9, alpha: 1)))
                             .cornerRadius(5)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
                             .padding(.bottom)
@@ -146,7 +184,19 @@ struct PopularRestarauntsView: View {
     }
 }
 
+//step 4 create a hasbable user struct
+struct Users: Hashable {
+    let name, imageName: String
+}
+
 struct TrendingCreatorsView: View {
+    //step 5 use the user
+    let users: [Users] = [
+        .init(name: "Amy Adams", imageName: "amy"),
+        .init(name: "Billy", imageName: "billy"),
+        .init(name: "Sam Smith", imageName: "sam")
+    
+    ]
     var body: some View {
         VStack {
             HStack {
@@ -158,14 +208,22 @@ struct TrendingCreatorsView: View {
             }
         }.padding(.horizontal)
         .padding(.top)
-
+        //adding .top here pushes images up, .top only available for hstack and zstack
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8.0) {
-                ForEach(0..<15, id: \.self) { num in
-                        Spacer()
-                            .frame(width: 50, height: 50)
-                            .background(Color.gray)
-                            .cornerRadius(.infinity)
+            HStack(alignment: .top, spacing: 12) {
+                ForEach(users, id: \.self) { user in
+                    VStack() {
+                        Image(user.imageName)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(60)
+                        Text(user.name)
+                            .font(.system(size: 14))
+                            .multilineTextAlignment(.center)
+                            
+                    }
+                    .frame(width: 60)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
                             .font(.system(size: 12, weight: .semibold))
                             .padding(.bottom)
