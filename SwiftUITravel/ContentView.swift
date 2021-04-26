@@ -4,18 +4,51 @@
 //
 //  Created by Richard Price on 21/04/2021.
 //
-
 import SwiftUI
 
 struct ContentView: View {
+    
+    //step 3 modfiy nav bar appearence proxy
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+    }
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                DiscoverCategoriesView()
-                PopularDestinationsView()
-                PopularRestarauntsView()
-                TrendingCreatorsView()
-            }.navigationTitle("Discover")
+            //step 1 wrap everything in a Zstack
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.9989629388, green: 0.6833450198, blue: 0.2572694123, alpha: 1)), Color(#colorLiteral(red: 0.9992215037, green: 0.5845271945, blue: 0.2407189906, alpha: 1))]), startPoint: .leading, endPoint: .center)
+                    .ignoresSafeArea()
+                //step 4 great trick for pushing background down using an offset
+                Color(.init(white: 0.95, alpha: 1))
+                    .offset(y: 400)
+                ScrollView {
+                    //step 5, adjust tile colors then add a search bar
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        Text("Where do you want to go")
+                        Spacer()
+                        //step 6 add modifyers for the search bar
+                    }.font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color(.init(white: 1, alpha: 0.3)))
+                    .cornerRadius(10)
+                    .padding(16)
+                    DiscoverCategoriesView()
+                    //step 2 add new vstack for a new back ground and wrap views inside
+                    VStack {
+                        PopularDestinationsView()
+                        PopularRestarauntsView()
+                        TrendingCreatorsView()
+                    }.background(Color(.init(white: 0.95, alpha: 1)))
+                    .cornerRadius(16)
+                    .padding(.top, 32)
+                }
+            }
+            .navigationTitle("Discover")
         }
     }
 }
@@ -35,22 +68,23 @@ struct DiscoverCategoriesView: View {
         .init(name: "Live Events", imageName: "music.mic"),
         .init(name: "Food", imageName: "music.mic"),
         .init(name: "History", imageName: "music.mic")]
-    
+    //step 5 update circle colors
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .top, spacing: 12) {
                 ForEach(categories, id: \.self) { category in
                     VStack(spacing: 8) {
                         Image(systemName: category.imageName)
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color(#colorLiteral(red: 0.9992952943, green: 0.6755241752, blue: 0.2485451996, alpha: 1)))
                             .frame(width: 64, height: 64)
-                            .background(Color.gray)
+                            .background(Color.white)
                             .cornerRadius(34)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
                         Text(category.name)
                             .font(.system(size: 14))
                             .font(.system(size: 12, weight: .semibold))
                             .multilineTextAlignment(.center)
+                            .foregroundColor(.white)
                     }.frame(width: 64)
                 }
             }
@@ -101,7 +135,7 @@ struct PopularDestinationsView: View {
                             .padding(.bottom, 8)
                             .foregroundColor(.gray)
                     }
-                            .background(Color(.init(white: 0.9, alpha: 1)))
+                    .background(Color.white)
                             .cornerRadius(5)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
                             .padding(.bottom)
@@ -111,20 +145,16 @@ struct PopularDestinationsView: View {
         }
     }
 }
-
-//step 1 create another hasable struct
 struct Restaurants: Hashable {
     let name, imageName: String
 }
 
 struct PopularRestarauntsView: View {
-    //step 2
     let restaraunts: [Restaurants] = [
         .init(name: "Japan's Finest Tapas", imageName: "tapas"),
         .init(name: "Bar & Grill", imageName: "bar_grill"),
     
     ]
-    
     var body: some View {
         VStack {
             HStack {
@@ -141,7 +171,6 @@ struct PopularRestarauntsView: View {
             HStack(spacing: 0) {
                 ForEach(restaraunts, id: \.self) { restaraunt in
                         Spacer()
-                    //step 3 add hstack inside existing hstack scroll view
                     HStack(spacing: 8) {
                         Image(restaraunt.imageName)
                                 .resizable()
@@ -173,7 +202,7 @@ struct PopularRestarauntsView: View {
                         Spacer()
                     }
                             .frame(width: 240)
-                            .background(Color(.init(white: 0.9, alpha: 1)))
+                            .background(Color.white)
                             .cornerRadius(5)
                             .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
                             .padding(.bottom)
@@ -183,19 +212,14 @@ struct PopularRestarauntsView: View {
         }
     }
 }
-
-//step 4 create a hasbable user struct
 struct Users: Hashable {
     let name, imageName: String
 }
-
 struct TrendingCreatorsView: View {
-    //step 5 use the user
     let users: [Users] = [
         .init(name: "Amy Adams", imageName: "amy"),
         .init(name: "Billy", imageName: "billy"),
         .init(name: "Sam Smith", imageName: "sam")
-    
     ]
     var body: some View {
         VStack {
@@ -208,7 +232,6 @@ struct TrendingCreatorsView: View {
             }
         }.padding(.horizontal)
         .padding(.top)
-        //adding .top here pushes images up, .top only available for hstack and zstack
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .top, spacing: 12) {
                 ForEach(users, id: \.self) { user in
