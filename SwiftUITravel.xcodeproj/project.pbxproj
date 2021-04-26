@@ -33,6 +33,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B641DBF2636E481001CC7FC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		1BCFE5BC262FECC20059FAE8 = {
 			isa = PBXGroup;
 			children = (
@@ -52,6 +59,7 @@
 		1BCFE5C7262FECC20059FAE8 /* SwiftUITravel */ = {
 			isa = PBXGroup;
 			children = (
+				1B641DBF2636E481001CC7FC /* Controller */,
 				1BCFE5D926302E600059FAE8 /* View */,
 				1BCFE5D826302E590059FAE8 /* Model */,
 				1BCFE5C8262FECC20059FAE8 /* SwiftUITravelApp.swift */,
